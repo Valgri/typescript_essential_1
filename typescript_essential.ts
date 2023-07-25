@@ -1,6 +1,6 @@
 interface ObserverHandlers<T> {
   next?: (value: T) => void;
-  error?: (error: any) => void;
+  error?: (error: Error) => void;
   complete?: () => void;
 }
 
@@ -18,7 +18,7 @@ class Observer<T> {
     }
   }
 
-  error(error: any) {
+  error(error: Error) {
     if (!this.isUnsubscribed) {
       if (this.handlers.error) {
         this.handlers.error(error);
@@ -134,7 +134,7 @@ const handleRequest = (request: Request): { status: number } => {
   return { status: HTTP_STATUS_OK };
 };
 
-const handleError = (error: any): { status: number } => {
+const handleError = (error: Error): { status: number } => {
   // handling of error
   return { status: HTTP_STATUS_INTERNAL_SERVER_ERROR };
 };
